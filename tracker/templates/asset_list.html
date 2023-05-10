@@ -1,0 +1,31 @@
+<!-- asset_list.html -->
+
+{% extends 'base.html' %} {% block content %}
+<h1>Asset List</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Asset</th>
+      <th>Assigned To</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for asset in assets %}
+    <tr>
+      <td>{{ asset.name }}</td>
+      <td>{% if asset.assigned_to %}{{ asset.assigned_to.name }}{% endif %}</td>
+      <td>
+        {% if asset.assigned_to %}
+        <a href="{% url 'asset_return' asset.id %}">
+          {% if asset.returned_date %} returned {% else %} return {% endif %}
+        </a>
+        {% else %}
+        <a href="{% url 'asset_assign' asset.id %}">Assign</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
